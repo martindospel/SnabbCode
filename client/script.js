@@ -76,6 +76,31 @@ const handleSubmit = async (e) => {
 
   // responseDiv.innerHTML = "..."
   loader(responseDiv);
+
+  //now fetch data from server and get ai's response
+  const response = await fetch("http://localhost:5000", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
+    },
+    body: JSON.stringify({
+      prompt: data.get("prompt"),
+    }),
+  });
+  clearInterval(loadingInterval);
+  responseDiv.innerHTML = "";
+
+  if (response.ok) {
+    const data = await response.json();
+    const parsedData = data.bot.trim();
+    typeText(responseDiv, parsedData);
+  } else {
+    const error = await response.text();
+    responseDiv.innerHTML = "An error occured";
+    responseDiv.style.color = "red";
+    alert(error);
+  }
 };
 
 form.addEventListener("submit", handleSubmit);
