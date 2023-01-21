@@ -1,19 +1,19 @@
-import bot from "./assets/bot.svg";
-import user from "./assets/user.svg";
+import ai from "./assets/ai.svg";
+import human from "./assets/human.svg";
 
 const form = document.querySelector("form");
 const chatContainer = document.querySelector("#chat_container");
 
-let loadInterval;
+let loadingInterval;
 
 function loader(element) {
   element.textContent = "";
 
-  loadInterval = setInterval(() => {
-    // Update the text content of the loading indicator
+  loadingInterval = setInterval(() => {
+    // Update text content of loading indicator
     element.textContent += ".";
 
-    // If the loading indicator has reached three dots, reset it
+    // If loading indicator has reached three dots, reset it
     if (element.textContent === "....") {
       element.textContent = "";
     }
@@ -30,25 +30,25 @@ function typeText(element, text) {
     } else {
       clearInterval(interval);
     }
-  }, 20);
+  }, 18);
 }
 
 function generateUniqueId() {
-  const timestamp = Date.now();
-  const randomNumber = Math.random(1000);
-  const hexadecimalString = randomNumber.toString(16);
+  const currentTime = Date.now();
+  const numberRandom = Math.random();
+  const numberHexDecStr = numberRandom.toString(16);
 
-  return `id-${timestamp}-${hexadecimalString}`;
+  return `id-${currentTime}-${numberHexDecStr}`;
 }
 
-function chatStripe(isAi, value, uniqueId) {
+function chatSegment(isAi, value, uniqueId) {
   return `
       <div class="wrapper ${isAi && "ai"}">
           <div class="chat">
               <div class="profile">
                   <img 
-                    src=${isAi ? bot : user} 
-                    alt="${isAi ? "bot" : "user"}" 
+                    src=${isAi ? ai : human} 
+                    alt="${isAi ? "ai" : "human"}" 
                   />
               </div>
               <div class="message" id=${uniqueId}>${value}</div>
@@ -61,21 +61,21 @@ const handleSubmit = async (e) => {
   e.preventDefault();
   const data = new FormData(form);
 
-  // user's chatstripe
-  chatContainer.innerHTML += chatStripe(false, data.get("prompt"));
-  // to clear the textarea input
+  // human's chatSegment
+  chatContainer.innerHTML += chatSegment(false, data.get("prompt"));
+  // to clear textarea input
   form.reset();
 
-  // bot's chatstripe
+  // ai's chatSegment
   const uniqueId = generateUniqueId();
-  chatContainer.innerHTML += chatStripe(true, " ", uniqueID);
-  // to focus scroll to the bottom
+  chatContainer.innerHTML += chatSegment(true, " ", uniqueId);
+  // to focus scroll to bottom
   chatContainer.scrollTop = chatContainer.scrollHeight;
   // specific message div
-  const messageDiv = document.getElementById(uniqueId);
+  const responseDiv = document.getElementById(uniqueId);
 
-  // messageDiv.innerHTML = "..."
-  loader(messageDiv);
+  // responseDiv.innerHTML = "..."
+  loader(responseDiv);
 };
 
 form.addEventListener("submit", handleSubmit);
