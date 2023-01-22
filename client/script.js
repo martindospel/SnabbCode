@@ -78,11 +78,10 @@ const handleSubmit = async (e) => {
   loader(responseDiv);
 
   //now fetch data from server and get ai's response
-  const response = await fetch("http://localhost:5000", {
+  const response = await fetch("http://localhost:1234", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
     },
     body: JSON.stringify({
       prompt: data.get("prompt"),
