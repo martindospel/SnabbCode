@@ -1,6 +1,6 @@
 # Snabby
 
-Still an MVP, but you can check it out here --> [Snabby](https://snabby.vercel.app/)
+Still at the MVP stage, but you can check it out here --> [Snabby](https://snabby.vercel.app/)
 
 #### Tech stack
 OpenAI, Node.js, Vite
