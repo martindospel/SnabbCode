@@ -78,7 +78,7 @@ const handleSubmit = async (e) => {
   loader(responseDiv);
 
   //now fetch data from server and get ai's response
-  const response = await fetch("http://localhost:1234", {
+  const response = await fetch("https://snabby.onrender.com", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
